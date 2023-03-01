@@ -1,36 +1,24 @@
-import express from 'express'
-import devBundle from './devBundle'
-import path from 'path'
-import { MongoClient } from 'mongodb'
-const CURRENT_WORKING_DIR = process.cwd()
+import config from './../config/config'
+import app from './express'
+import mongoose from 'mongoose'
 
-const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/mevnBoilerplate'
-const app = express()
-let port = process.env.PORT || 3000
+mongoose.Promise = global.Promise
+mongoose.set('strictQuery', false)
 
-// if development
-devBundle.compile(app)
+mongoose.connect(config.mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+)
 
-app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')))
-
-app.get('/favicon.ico', (req, res) => {
-  res.status(200).sendFile(path.join(CURRENT_WORKING_DIR, 'assets/favicon.ico'))
+mongoose.connection.on('error', () => {
+  console.log(config.mongoUri)
+  throw new Error(`unable to connect to database: ${config.mongoUri}`)
 })
 
-app.get('/', (req, res) => {
-  res.status(200).sendFile(path.join(CURRENT_WORKING_DIR, 'template.html'))
-})
-
-
-app.listen(port, function onStart(err) {
+app.listen(config.port, (err) => {
   if (err) {
     console.log(err)
   }
-  console.info('Server started on port %s.', port)
-})
-
-
-MongoClient.connect(url, (err, db) => {
-  console.log("Connected successfully to mongodb server")
-  db.close()
+  console.info('Server started on port %s.', config.port)
 })
