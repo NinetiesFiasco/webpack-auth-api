@@ -15,6 +15,11 @@ const config = {
     filename: 'bundle.js',
     publicPath: "/dist/"
   },
+  resolve: {
+    alias: {
+      API: path.resolve(CURRENT_WORKING_DIR, 'client/api')
+    }
+  },
   module: {
     rules: [
       {

@@ -11,7 +11,7 @@ const getErrorMessage = (err) => {
     }
   } else {
     for (let errName in err.errors) {
-      if (err.errors[errname].massage) 
+      if (err.errors[errName].message) 
         message = err.errors[errName].message
     }
   }

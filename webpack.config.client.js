@@ -18,6 +18,11 @@ const config = {
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
+  resolve: {
+    alias: {
+      API: path.resolve(CURRENT_WORKING_DIR, 'client/api')
+    }
+  },
   module: {
     rules: [
       {
@@ -39,7 +44,7 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: false,
+      __VUE_PROD_DEVTOOLS__: true,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

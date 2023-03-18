@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
   }
 })
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.status(200).sendFile(path.join(CURRENT_WORKING_DIR, 'template.html'))
 })
 

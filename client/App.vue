@@ -1,13 +1,25 @@
 <template>
-  Hello world
-  <second />
+  <div>
+    <Menu />
+    <router-view />
+  </div>
 </template>
 
 <script>
-import Second from './Second.vue'
+import {Menu} from './components'
+import {mapActions} from 'vuex'
+
 export default {
   name: 'App',
-  components: {Second}
+  components: {Menu},
+  created() {
+    this.initialization()
+  },
+  methods: {
+    ...mapActions({
+      initialization: 'auth/initialization'
+    })
+  }
 }
 </script>
 
